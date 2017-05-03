@@ -2,7 +2,7 @@
 {--  PART 1 --}
 
 {-- 1.1 --}
-mkBoard n = replicate n (replicate 3 0)  
+mkBoard n = replicate n (replicate n 0)  
 
 isGameOver bd = length intact == 0 where
     intact = [p | p <- all , p > 0] where
@@ -38,9 +38,11 @@ isHit x y board
 		  
 hitBoard :: Int -> Int -> [[Int]] -> [[Int]]
 hitBoard x y board
-    |(hit > 0) = desconc (length board) (take (index-1) concatBoard ++ [-2] ++ drop (index) concatBoard)
-    |(hit == 0) = 	desconc (length board) (take (index-1) concatBoard ++ [-1] ++ drop (index) concatBoard)
+    |(shot > 1) = desconc (length board) (take (index-1) concatBoard ++ [-shot] ++ drop (index) concatBoard)
+    |(shot == 0) = desconc (length board) (take (index-1) concatBoard ++ [-1] ++ drop (index) concatBoard)
     | otherwise = [] where 
-	    index = ((y-1) * length board)+x
-	    concatBoard = concat board
-        hit = board !!x !!y
+        index = ((y-1) * length board)+x 
+        concatBoard = concat board
+        shot = board !!x !!y
+		
+{-- 1.4 --}
