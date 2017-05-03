@@ -47,9 +47,9 @@ hitBoard x y board
     |(shot > 1) = desconc (length board) (take (index-1) concatBoard ++ [-shot] ++ drop (index) concatBoard) {-- if hits a ship then changes to negative value --}
     |(shot == 0) = desconc (length board) (take (index-1) concatBoard ++ [-1] ++ drop (index) concatBoard) {-- if there is nothing then put a -1--}
     | otherwise = [] where  {-- if it is negative then do nothing--}
-        index = ((y-1) * length board)+x 
+        index = (y * length board) + (x+1) 
         concatBoard = concat board
-        shot = board !!x !!y
+        shot = board !!y !!x
 		
 {-- 1.4 --}
 boardToStr marker board = mapM_(putStrLn . marker) board
