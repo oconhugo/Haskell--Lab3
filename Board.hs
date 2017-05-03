@@ -36,10 +36,11 @@ isHit x y board
     |otherwise = False
     where shot = board !!x !!y
 		  
+hitBoard :: Int -> Int -> [[Int]] -> [[Int]]
 hitBoard x y board
-    |shot == hit = True
-    |shot == miss = True
-    |otherwise = False
-    where shot = board !!x !!y
-          hit = -2
-          miss = -1
+    |(hit > 0) = desconc (length board) (take (index-1) concatBoard ++ [-2] ++ drop (index) concatBoard)
+    |(hit == 0) = 	desconc (length board) (take (index-1) concatBoard ++ [-1] ++ drop (index) concatBoard)
+    | otherwise = [] where 
+	    index = ((y-1) * length board)+x
+	    concatBoard = concat board
+        hit = board !!x !!y
