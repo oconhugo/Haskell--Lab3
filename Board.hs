@@ -54,21 +54,15 @@ hitBoard x y board
 {-- 1.4 --}
 boardToStr marker board = mapM_(putStrLn . marker) board
 
+{-- Display the miss shoots, the places non shooted and ships hitted --}
 sqToStr [] = []
 sqToStr (h:t) = (displayShots h) ++ " " ++ sqToStr t
 displayShots n = if n == -1 then id "O" else if n < -1 then id "X" else id "."
 
+{-- Display the miss shoots, the places non shooted, ships hitted and the location of the ships--}
 sqToStrCheat [] = []
 sqToStrCheat (h:t) = (cheat h) ++ " " ++ sqToStrCheat t
 cheat n = if n == 0 then id "." 
 else if n == -1 then id "O" 
 else if n < -1 then id "X" else show n
-
-
-
-
-
-
-
-
 
