@@ -33,24 +33,24 @@ import Board
 		-- ships = [h] ++ t
 		-- dir = False
 		
-getXY :: [Int] -> [Row] -> IO ()
-getXY prompt board = do
-       putStrLn ("Enter a positive value?")   
-       line <- getLine
-       let parsed = reads line :: [(Int, String)] in
-         if length parsed == 0
-         then getXY'
-         else let (input, _) = head parsed in
-           if (input > 0 && (length prompt) < 3)
-           then getXY ([input] ++ prompt) board
-           else if(input < 0) 
-		   then getXY'
-		   else 
-		     if((isHit (prompt !!1) (prompt !!2) board))
-			 then 
-			    getXY [] board
-			 else (hitBoard (prompt !!1) (prompt !!2) board)
-       where
-         getXY' = do
-           putStrLn "Invalid input!"
-           getXY prompt board
+-- getXY :: [Int] -> [Row] -> IO ()
+-- getXY prompt board = do
+       -- putStrLn ("Enter a positive value?")   
+       -- line <- getLine
+       -- let parsed = reads line :: [(Int, String)] in
+         -- if length parsed == 0
+         -- then getXY'
+         -- else let (input, _) = head parsed in
+           -- if (input > 0 && (length prompt) < 3)
+           -- then getXY ([input] ++ prompt) board
+           -- else if(input < 0) 
+		   -- then getXY'
+		   -- else 
+		     -- if((isHit (prompt !!1) (prompt !!2) board))
+			 -- then 
+			    -- getXY [] board
+			 -- else return (hitBoard (prompt !!1) (prompt !!2) board)
+       -- where
+         -- getXY' = do
+           -- putStrLn "Invalid input!"
+           -- getXY prompt board
