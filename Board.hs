@@ -1,12 +1,10 @@
 {-
-	Author: Ana Garcia & Cristian Ayub
+	Authors: Hugo Ocon, Jesus Juarez & Francisco Landa
 	Professor: Dr. Yoonsik Cheon
 	TA: Sheikh Naim
-	Assignment: Project #3 - Functional Programmin Using Haskell
-	Objective: To understand the concepts of
-		functional programming and have a taste of it by writing a small
-		Haskell program.
-	Last updated: 05/03/2017
+	Assignment: Battleship
+	Description: Board is a module with several functions that implements the 
+		     logic of the battleship game using Haskell
 -}
 
 module Board where
