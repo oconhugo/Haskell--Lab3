@@ -58,7 +58,7 @@ deconcat n list = take n list : deconcat n (drop n list)
 	Checks whether a place (x,y) has been hit on a board
 -}
 isHit x y board
-    |shot < 0 = True
+    | shot < 0 = True
     |otherwise = False
     where shot = board !!y !!x
 

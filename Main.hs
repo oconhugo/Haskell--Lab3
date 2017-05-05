@@ -32,14 +32,15 @@ play board = do
 		putStrLn ("Input Y coordinate to shoot")
 		coordY <- getLine
 		let cy = convertStringToInt coordY
-		let newBoard = hitBoard cx cy board
-		play newBoard
-		-- if (isHit cx cy board) 
-		-- then 
-			-- play board
-		-- else
-			-- let newBoard = hitBoard cx cy board
-			-- play newBoard
+		-- let newBoard = hitBoard cx cy board
+		-- play newBoard
+		if (isHit cx cy board) 
+		then do
+			putStrLn ("Error: Invalid shot.")
+			play board
+		else do
+			let newBoard = hitBoard cx cy board
+			play newBoard
 		
 execute board = do
 	board <- placeShips 5 board
