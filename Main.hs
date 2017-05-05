@@ -1,39 +1,29 @@
+import Data.Char
+import Data.List
 import System.IO
 import System.Random
 import Board
 
--- main :: IO ()
--- main = do
-	-- number <- randomRIO (1,10) :: IO Int
-	-- number1 <- randomRIO (1,10) :: IO Int
-	-- putStrLn ("Your random number X is: " ++ show number)
-	-- putStrLn ("Your random number Y is: " ++ show number1)
 
--- x :: IO Int
--- y :: IO Int
--- placeShips :: [Int] -> [[Int]] -> IO [[Int]]
--- placeShips [] board = [[]]
--- placeShips (h:t) board
-	-- | (isShipPlaceable h x y dir board) = placeShip h x y dir board : placeShips t x y dir board
-	-- | otherwise = placeShips ships board where
-        -- x <- randomRIO (0,9) :: IO Int
-        -- y <- randomRIO (0,9) :: IO Int
-        -- ships = h ++ t
+convertStringToInt :: String -> Int
+convertStringToInt [x] = ((ord x) - (ord '0'))
 
 -- placeShips :: [Int] -> [[Int]] -> IO [[Int]]
--- placeShips (h:t) board = do 
-	-- x <- randomRIO (0,9) :: IO Int
-	-- y <- randomRIO (0,9) :: IO Int
-	-- -- d <- randomRIO (0,1) :: IO Int
-	-- if (isShipPlaceable h x y dir board) 
-	-- then placeShip h x y dir board 
-	-- else if (isShipPlaceable 0 x y dir board) then return board
-	-- -- else if (placeShips [] board) then return board
-	-- else placeShips ships board where
-		-- ships = [h] ++ t
-		-- dir = False
+placeShips h board = do 
+	x <- randomRIO (0,9) :: IO Int
+	y <- randomRIO (0,9) :: IO Int
+	dir <- randomRIO (0,1) :: IO Int
+	if((dir::Int) == 1)
+	then 
+		if(isShipPlaceable h (x::Int) (y::Int) True board)
+		then return ((placeShip h (x::Int) (y::Int) True board)::Board)
+		else placeShips h board
+	else
+		if(isShipPlaceable h (x::Int) (y::Int) False board)
+		then return ((placeShip h (x::Int) (y::Int) False board)::Board)
+		else placeShips h board
 		
--- getXY :: [Int] -> [Row] -> IO ()
+-- getXY :: [Int] -> [Row] -> IO [Row]
 -- getXY prompt board = do
        -- putStrLn ("Enter a positive value?")   
        -- line <- getLine
@@ -46,7 +36,7 @@ import Board
            -- else if(input < 0) 
 		   -- then getXY'
 		   -- else 
-		     -- if((isHit (prompt !!1) (prompt !!2) board))
+		     -- if((isHit (prompt !!2) (prompt !!3) board))
 			 -- then 
 			    -- getXY [] board
 			 -- else return (hitBoard (prompt !!1) (prompt !!2) board)
@@ -54,3 +44,46 @@ import Board
          -- getXY' = do
            -- putStrLn "Invalid input!"
            -- getXY prompt board
+		  
+-- getCoordinate = do
+       -- putStrLn "Enter a positive value?"
+       -- line <- getLine
+       -- let parsed = reads line :: [(Int, String)] in
+         -- if length parsed == 0
+         -- then getCoordAgain
+         -- else let (x, _) = head parsed in
+           -- if x > 0 
+           -- then return x
+           -- else getCoordinate
+         -- where
+           -- getCoordAgain = do
+             -- putStrLn "Invalid input!"
+             -- getCoordinate
+		   
+-- play board =
+	-- if isGameOver board
+	-- then board
+	-- else
+		-- do
+			-- let cx = convertStringToInt x
+			-- let cy = convertStringToInt y
+			-- if (isHit cy cx board)
+			-- then (play board)
+			-- else (hitBoard cy cx board) where
+				-- x = getCoordinate
+				-- y = getCoordinate
+
+play board = do
+	board <- placeShips 5 board
+	boardToStr sqToStrCheat board
+	if isGameOver board
+	then do return "Game Over"
+	else do
+		putStrLn ("Input X coordinate to shoot")
+		coordX <- getLine
+		let cx = convertStringToInt coordX
+		putStrLn ("Input Y coordinate to shoot")
+		coordY <- getLine
+		let cy = convertStringToInt coordY
+		let newBoard = hitBoard cx cy board
+		play newBoard
