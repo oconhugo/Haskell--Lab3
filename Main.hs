@@ -4,11 +4,9 @@ import System.IO
 import System.Random
 import Board
 
-
 convertStringToInt :: String -> Int
 convertStringToInt [x] = ((ord x) - (ord '0'))
 
--- placeShips :: [Int] -> [[Int]] -> IO [[Int]]
 placeShips h board = do 
 	x <- randomRIO (0,9) :: IO Int
 	y <- randomRIO (0,9) :: IO Int
@@ -22,59 +20,8 @@ placeShips h board = do
 		if(isShipPlaceable h (x::Int) (y::Int) False board)
 		then return ((placeShip h (x::Int) (y::Int) False board)::Board)
 		else placeShips h board
-		
--- getXY :: [Int] -> [Row] -> IO [Row]
--- getXY prompt board = do
-       -- putStrLn ("Enter a positive value?")   
-       -- line <- getLine
-       -- let parsed = reads line :: [(Int, String)] in
-         -- if length parsed == 0
-         -- then getXY'
-         -- else let (input, _) = head parsed in
-           -- if (input > 0 && (length prompt) < 3)
-           -- then getXY ([input] ++ prompt) board
-           -- else if(input < 0) 
-		   -- then getXY'
-		   -- else 
-		     -- if((isHit (prompt !!2) (prompt !!3) board))
-			 -- then 
-			    -- getXY [] board
-			 -- else return (hitBoard (prompt !!1) (prompt !!2) board)
-       -- where
-         -- getXY' = do
-           -- putStrLn "Invalid input!"
-           -- getXY prompt board
-		  
--- getCoordinate = do
-       -- putStrLn "Enter a positive value?"
-       -- line <- getLine
-       -- let parsed = reads line :: [(Int, String)] in
-         -- if length parsed == 0
-         -- then getCoordAgain
-         -- else let (x, _) = head parsed in
-           -- if x > 0 
-           -- then return x
-           -- else getCoordinate
-         -- where
-           -- getCoordAgain = do
-             -- putStrLn "Invalid input!"
-             -- getCoordinate
-		   
--- play board =
-	-- if isGameOver board
-	-- then board
-	-- else
-		-- do
-			-- let cx = convertStringToInt x
-			-- let cy = convertStringToInt y
-			-- if (isHit cy cx board)
-			-- then (play board)
-			-- else (hitBoard cy cx board) where
-				-- x = getCoordinate
-				-- y = getCoordinate
 
 play board = do
-	board <- placeShips 5 board
 	boardToStr sqToStrCheat board
 	if isGameOver board
 	then do return "Game Over"
@@ -87,3 +34,17 @@ play board = do
 		let cy = convertStringToInt coordY
 		let newBoard = hitBoard cx cy board
 		play newBoard
+		-- if (isHit cx cy board) 
+		-- then 
+			-- play board
+		-- else
+			-- let newBoard = hitBoard cx cy board
+			-- play newBoard
+		
+execute board = do
+	board <- placeShips 5 board
+	board <- placeShips 4 board
+	board <- placeShips 3 board
+	board <- placeShips 2 board
+	board <- placeShips 2 board
+	play board
